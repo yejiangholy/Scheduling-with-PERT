@@ -1,0 +1,1 @@
+C:\CPI\Poc\Scheduale\MiddleConsumer\MiddleConsumer\bin\Debug\MiddleConsumer.exe.config

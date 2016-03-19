@@ -1,0 +1,8 @@
+C:\CPI\Poc\Scheduale\SampleSchedual\SchedulerTest\bin\Debug\SchedulerTest.dll
+C:\CPI\Poc\Scheduale\SampleSchedual\SchedulerTest\bin\Debug\SchedulerTest.pdb
+C:\CPI\Poc\Scheduale\SampleSchedual\SchedulerTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\CPI\Poc\Scheduale\SampleSchedual\SchedulerTest\bin\Debug\SampleSchedual.pdb
+C:\CPI\Poc\Scheduale\SampleSchedual\SchedulerTest\obj\Debug\SchedulerTest.csprojResolveAssemblyReference.cache
+C:\CPI\Poc\Scheduale\SampleSchedual\SchedulerTest\obj\Debug\SchedulerTest.dll
+C:\CPI\Poc\Scheduale\SampleSchedual\SchedulerTest\obj\Debug\SchedulerTest.pdb
+C:\CPI\Poc\Scheduale\SampleSchedual\SchedulerTest\bin\Debug\SampleSchedual.dll

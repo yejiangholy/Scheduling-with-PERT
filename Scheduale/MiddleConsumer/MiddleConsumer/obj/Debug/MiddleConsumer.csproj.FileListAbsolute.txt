@@ -1,1 +1,3 @@
 C:\CPI\Poc\Scheduale\MiddleConsumer\MiddleConsumer\bin\Debug\MiddleConsumer.exe.config
+C:\Schedule&PERT\Scheduale\MiddleConsumer\MiddleConsumer\bin\Debug\MiddleConsumer.exe.config
+C:\Schedule&PERT\Scheduale\MiddleConsumer\MiddleConsumer\obj\Debug\MiddleConsumer.csprojResolveAssemblyReference.cache

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SampleSchedule.PropertyBags;
+using CPI.Graphing.GraphingEngine.Contracts.Dc;
 
 namespace MiddleConsumer.Factory
 {
@@ -13,7 +14,7 @@ namespace MiddleConsumer.Factory
     {
         #region Declarations
 
-        private static Dictionary<int, IEdge> TaskHash = new Dictionary<int, IEdge>();
+        private static Dictionary<int, Activity> TaskHash = new Dictionary<int, Activity>();
         private static Dictionary<int, IResource> EmployeeHash = new Dictionary<int, IResource>();
 
         #endregion Declarations 
@@ -25,7 +26,9 @@ namespace MiddleConsumer.Factory
 
             assignDependencies(graph);
 
-            ScheduleData data = new ScheduleData() { EdgeHash = TaskHash, ResourceHash = EmployeeHash };
+            assignSuccessors(graph);
+
+            ScheduleData data = new ScheduleData() { ActivityHash = TaskHash, ResourceHash = EmployeeHash };
             return data;
         }
 
@@ -33,11 +36,12 @@ namespace MiddleConsumer.Factory
         {
             for (int i = 0; i < graph.EdgeList.Count; i++)
             {
-                TaskHash.Add(i, new Edge
+                TaskHash.Add(i, new Activity
                 {
                     Id = graph.EdgeList[i].Id,
                     Duration = graph.EdgeList[i].Timing.Duration,
-                    DependencyList = new List<IEdge>(),
+                    DependsOnList = new List<IEdge>(),
+                    DependentList = new List<IEdge>(),
                     Est = graph.EdgeList[i].Timing.Est,
                 });
             }
@@ -45,15 +49,16 @@ namespace MiddleConsumer.Factory
 
         private void assignEmployeeHash(int num)
         {
-            for (int i = 0; i < num; i++)
-            {
-                EmployeeHash.Add(i, new Employee
+                for (int i = 0; i < num; i++)
                 {
-                    Name = string.Format("E{0}", i),
-                    FreeTime = new DateTime(2015, 10, 1),
-                    StartWork = new DateTime(2014, 10, 1),
-                });
-            }
+                    EmployeeHash.Add(i, new Employee
+                    {
+                        Name = string.Format("E{0}", i),
+                        FreeTime = new DateTime(2015, 10, 1),
+                        StartWork = new DateTime(2014, 10, 1),
+                    });
+                }
+
         }
 
         private void assignDependencies(MiddleConsumer.Property.IGraph graph)
@@ -62,7 +67,18 @@ namespace MiddleConsumer.Factory
             {
                 foreach (var edge in graph.EdgeList[i].DependsOnList)
                 {
-                    TaskHash[i].DependencyList.Add(TaskHash[edge.Id]);
+                    ((Activity)TaskHash[i]).DependsOnList.Add(TaskHash[edge.Id]);
+                }
+            }
+        }
+
+        private void assignSuccessors(MiddleConsumer.Property.IGraph graph)
+        {
+           for(int i=0; i<graph.EdgeList.Count; i++)
+            {
+                foreach(var edge in graph.EdgeList[i].DependentList)
+                {
+                    ((Activity)TaskHash[i]).DependentList.Add(TaskHash[edge.Id]);
                 }
             }
         }

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using SampleSchedule.PropertyBags;
 using CPI.Graphing.GraphingEngine.Contracts.Dc;
+using SampleSchedule.PropertyBags;
 
 namespace MiddleConsumer.Factory
 {
     public interface IUtilityDataFactory
     {
-        List<UtilityData> Create(List<IEdge> edgelist);
+        List<UtilityData> Create(List<Activity> edgelist);
     }
     public class UtilityDataFactory : IUtilityDataFactory
     {
@@ -14,7 +14,7 @@ namespace MiddleConsumer.Factory
         private List<UtilityData> utilityList;
         private ICollection<int> DependtList;
         #endregion Declarations 
-        public  List<UtilityData> Create(List<IEdge> edgeList )
+        public  List<UtilityData> Create(List<Activity> edgeList )
         {
             utilityList = new List<UtilityData>();
 
@@ -23,14 +23,14 @@ namespace MiddleConsumer.Factory
             return utilityList;
         }
 
-        private void assignUtilityData(List<IEdge> edgeList)
+        private void assignUtilityData(List<Activity> edgeList)
         {
             for (int i = 0; i < edgeList.Count; i++)
             {
                 DependtList = new List<int>();
                 foreach (var edge in edgeList)
                 {
-                    if (edge.FinishTime.CompareTo(edgeList[i].StartTime) == 0)
+                    if (((Activity)edge).FinishTime.CompareTo(((Activity)edgeList[i]).StartTime) == 0)
                     {
                         DependtList.Add(edge.Id);
                     }

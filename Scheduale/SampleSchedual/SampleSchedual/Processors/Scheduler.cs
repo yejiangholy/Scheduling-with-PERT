@@ -3,12 +3,13 @@ using SampleSchedule.PropertyBags;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CPI.Graphing.GraphingEngine.Contracts.Dc;
 
 namespace SampleSchedule.Processors
 {
     public interface IScheduler
     {
-        List<IEdge> Schedule(ScheduleData scheduleData);
+        List<Activity> Schedule(ScheduleData scheduleData);
     }
 
     public class Scheduler : IScheduler
@@ -16,16 +17,18 @@ namespace SampleSchedule.Processors
         #region Declarations
 
         private ResourceSelector _ResourceSelector = new ResourceSelector();
-        private EdgeSelector _EdgeSelector = new EdgeSelector();
-        private List<IEdge> _Response;
+        private ActivitySelector _ActivitySelector = new ActivitySelector();
+        private List<Activity> _Response;
         private ScheduleData _ScheduleData;
+        private bool givenResourceNum;
 
         #endregion Declarations
 
-        public List<IEdge> Schedule(ScheduleData scheduleData)
+        public List<Activity> Schedule(ScheduleData scheduleData)
         {
-            _Response = new List<IEdge>();
+            _Response = new List<Activity>();
             _ScheduleData = scheduleData;
+            givenResourceNum = (_ScheduleData.ResourceHash.Count != 0);
 
             assignFloat();
 
@@ -48,59 +51,59 @@ namespace SampleSchedule.Processors
 
         private void WalkingAhead()
         {
-            var edgeHash = _ScheduleData.EdgeHash;
-            var edgeList = new List<IEdge>();
-            for(int i=1; i<=edgeHash.Count;i++)
+            var ActivityHash = _ScheduleData.ActivityHash;
+            var ActivityList = new List<Activity>();
+            for(int i=1; i<=ActivityHash.Count;i++)
             {
-                edgeList.Add(edgeHash[i]);
+                ActivityList.Add(ActivityHash[i]);
             }
 
-            edgeList[0].Eft = edgeList[0].Est.AddDays(edgeList[0].Duration);
+            ActivityList[0].Eft = ActivityList[0].Est.AddDays(ActivityList[0].Duration);
 
-            for(int i=1; i<edgeList.Count;i++)
+            for(int i=1; i<ActivityList.Count;i++)
             {
-                foreach(IEdge predecessor in edgeList[i].DependencyList)
+                foreach(Activity predecessor in ActivityList[i].DependsOnList)
                 {
-                    if (edgeList[i].Est.CompareTo(predecessor.Eft) < 0)
-                        edgeList[i].Est = predecessor.Eft;
+                    if (ActivityList[i].Est.CompareTo(predecessor.Eft) < 0)
+                        ActivityList[i].Est = predecessor.Eft;
                 }
-                edgeList[i].Eft = edgeList[i].Est.AddDays(edgeList[i].Duration);
+                ActivityList[i].Eft = ActivityList[i].Est.AddDays(ActivityList[i].Duration);
             }
         }
 
         private void WalkingBack()
         {
-            var edgeHash = _ScheduleData.EdgeHash;
-            var edgeList = new List<IEdge>();
-            for (int i = 1; i <= edgeHash.Count; i++)
+            var ActivityHash = _ScheduleData.ActivityHash;
+            var ActivityList = new List<Activity>();
+            for (int i = 1; i <= ActivityHash.Count; i++)
             {
-                edgeList.Add(edgeHash[i]);
+                ActivityList.Add(ActivityHash[i]);
             }
-            var size = edgeList.Count;
+            var size = ActivityList.Count;
 
-            edgeList[size - 1].Lft = edgeList[size - 1].Eft;
-            edgeList[size - 1].Lst = edgeList[size-1].Lft.Subtract(new TimeSpan(edgeList[size-1].Duration*24,0,0));
+            ActivityList[size - 1].Lft = ActivityList[size - 1].Eft;
+            ActivityList[size - 1].Lst = ActivityList[size-1].Lft.Subtract(new TimeSpan(ActivityList[size-1].Duration*24,0,0));
 
             for(int i = size-2;i>=0;i--)
             {
-                var earlistStartTimeInSuccessor = new DateTime(9999, 12, 7);
-                foreach(IEdge sucessor in edgeList[i].Successors)
+                var earlistStartTimeInSuccessor = new DateTime(9998, 12, 7);
+                foreach(Activity sucessor in ActivityList[i].DependentList)
                 {
                     if (sucessor.Lst.CompareTo(earlistStartTimeInSuccessor) < 0)
                         earlistStartTimeInSuccessor = sucessor.Lst;
                 }
-                edgeList[i].Lft = earlistStartTimeInSuccessor;
-                edgeList[i].Lst = edgeList[i].Lft.Subtract(new TimeSpan(edgeList[i].Duration * 24, 0, 0));
+                ActivityList[i].Lft = earlistStartTimeInSuccessor;
+                ActivityList[i].Lst = ActivityList[i].Lft.Subtract(new TimeSpan(ActivityList[i].Duration * 24, 0, 0));
             }
         }
 
         private void assignFloatValue()
         {
-            var edgeHash = _ScheduleData.EdgeHash;
-            foreach(var key in edgeHash.Keys)
+            var ActivityHash = _ScheduleData.ActivityHash;
+            foreach(var key in ActivityHash.Keys)
             {
-                var edge = edgeHash[key];
-                edge.Float = edge.Lst.Subtract(edge.Est).TotalDays;
+                var Activity = ActivityHash[key];
+                Activity.Float = Activity.Lst.Subtract(Activity.Est).TotalDays;
             }
 
             
@@ -108,42 +111,50 @@ namespace SampleSchedule.Processors
 
         private void createSchedule()
         {
-            while (_ScheduleData.EdgeHash.Count() > 0) scheduleEdge();
+            while (_ScheduleData.ActivityHash.Count() > 0) scheduleActivity();
         }
 
-        private void scheduleEdge()
+        private void scheduleActivity()
         {
-            var nextTask = _EdgeSelector.SelectNext(_ScheduleData.EdgeHash);
-            var nextResource = _ResourceSelector.SelectNext(_ScheduleData.ResourceHash,nextTask);
+            var nextTask = _ActivitySelector.SelectNext(_ScheduleData.ActivityHash);
+            NextResource nextResource = null;
+            if (givenResourceNum)
+            {
+               nextResource = _ResourceSelector.SelectNext(_ScheduleData.ResourceHash, nextTask);
+            }
+            else
+            {
+                nextResource = _ResourceSelector.CreateNext(_ScheduleData.ResourceHash, nextTask);
+            }
 
-            assignNextEdge(nextTask, nextResource);
+            assignNextActivity(nextTask, nextResource);
             resourceSetInfo(nextTask, nextResource);
 
             _Response.Add(nextTask);
-            _ScheduleData.EdgeHash.Remove(nextTask.Id);
+            _ScheduleData.ActivityHash.Remove(nextTask.Id);
         }
 
-        private void assignNextEdge(IEdge nextEdge, NextResource nextResource)
+        private void assignNextActivity(Activity nextActivity, NextResource nextResource)
         {
-            nextEdge.TakenBy = nextResource.Resource;
-            nextEdge.Schedule = true;
+            nextActivity.TakenBy = nextResource.Resource;
+            nextActivity.Schedule = true;
 
-            nextEdge.StartTime = nextEdge.Est.CompareTo(nextResource.Resource.FreeTime) < 0
-                ? nextEdge.StartTime = nextResource.Resource.FreeTime
-                : nextEdge.StartTime = nextEdge.Est;
+            nextActivity.StartTime = nextActivity.Est.CompareTo(((Employee)nextResource.Resource).FreeTime) < 0
+                ? nextActivity.StartTime = ((Employee)nextResource.Resource).FreeTime
+                : nextActivity.StartTime = nextActivity.Est;
 
-            assignFinishTime(nextEdge);
+            assignFinishTime(nextActivity);
         }
 
-        private void assignFinishTime(IEdge nextEdge)
+        private void assignFinishTime(Activity nextActivity)
         {
-            nextEdge.FinishTime = nextEdge.StartTime + new TimeSpan(nextEdge.Duration, 0, 0, 0);
+            nextActivity.FinishTime = nextActivity.StartTime + new TimeSpan(nextActivity.Duration, 0, 0, 0);
         }
 
-        private void resourceSetInfo(IEdge nextEdge, NextResource nextResource)
+        private void resourceSetInfo(Activity nextActivity, NextResource nextResource)
         {
-            nextResource.Resource.StartWork = nextEdge.StartTime;
-            nextResource.Resource.FreeTime = nextEdge.FinishTime;
+            ((Employee)nextResource.Resource).StartWork = nextActivity.StartTime;
+            ((Employee)nextResource.Resource).FreeTime =  nextActivity.FinishTime;
         }
 
     }

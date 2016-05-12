@@ -1,19 +1,20 @@
 ﻿using SampleSchedule.PropertyBags;
-using System;
 using System.Collections.Generic;
 using SampleSchedule.Factories;
+using CPI.Graphing.GraphingEngine.Contracts.Dc;
+using System;
 
 namespace SampleSchedual.Processors
 {
     public interface IResourceSelector
     {
-        NextResource SelectNext(Dictionary<int, IResource> resourceHash,IEdge nextTask);
+        NextResource SelectNext(Dictionary<int, IResource> resourceHash,Activity nextTask);
     }
 
     public class ResourceSelector : IResourceSelector
     {
         #region Declarations
-        private IEdge _nextTask;
+        private Activity _nextTask;
         private IResource _FirstFreeTime;
         private int _FirstFreeTimeKey;
         private IResource _PreferResource;
@@ -22,24 +23,66 @@ namespace SampleSchedual.Processors
 
         #endregion Declarations
 
-        public NextResource SelectNext(Dictionary<int, IResource> resourceHash,IEdge nextTask)
+        public NextResource SelectNext(Dictionary<int, IResource> resourceHash, Activity nextTask)
         {
             _ResourceHash = resourceHash;
             _nextTask = nextTask;
 
-            findFirstFreeTime();
-            takePreference();
-            assignNextResource();
+                findFirstFreeTime();
+                takePreference();
+                assignNextResource();
 
-            return _Response;
+                return _Response;
         }
+
+        public NextResource CreateNext(Dictionary<int, IResource> resourceHash, Activity nextTask)
+        {
+            _ResourceHash = resourceHash;
+            _nextTask = nextTask;
+
+            if(findNext()==null)
+            {
+                Employee nextOne = new Employee
+                {
+                    Name = string.Format("E{0}", (_ResourceHash.Count + 1)),
+                    FreeTime = nextTask.Est.Add(new TimeSpan(nextTask.Duration * 24, 0, 0)),
+                    StartWork = nextTask.Est,
+                };
+                _ResourceHash.Add(_ResourceHash.Count + 1, nextOne );
+                _PreferResource = nextOne;
+                assignNextResource();
+                return _Response;
+            }
+            else
+            {
+                _PreferResource = findNext();
+                assignNextResource();
+                return _Response;
+            }
+        }
+
+        private Employee findNext()
+        {
+            Employee nextOne = null;
+            foreach(var e in _ResourceHash)
+            {
+                if (((Employee)e.Value).FreeTime.CompareTo(_nextTask.Est)<0)
+                {
+                    nextOne = (Employee)e.Value;
+                    return nextOne;
+                }
+            }
+            return nextOne;
+        }
+
+
 
         private void assignNextResource()
         {
             _Response = new NextResource
             {
                 Resource = _PreferResource,
-                AvailableTime = _PreferResource.FreeTime
+                AvailableTime = ((Employee)_PreferResource).FreeTime
             };
         }
 
@@ -49,7 +92,7 @@ namespace SampleSchedual.Processors
 
             foreach (var e in _ResourceHash)
             {
-                if (e.Value.FreeTime.CompareTo(_FirstFreeTime.FreeTime) >= 0) continue;
+                if (((Employee)e.Value).FreeTime.CompareTo(((Employee)_FirstFreeTime).FreeTime) >= 0) continue;
                 _FirstFreeTime = e.Value;
                 _FirstFreeTimeKey = e.Key;
             }
@@ -58,14 +101,14 @@ namespace SampleSchedual.Processors
         private IResource getById(int id)
         {
             IResource getbyId;
-            _ResourceHash .TryGetValue(id, out getbyId);
+            _ResourceHash.TryGetValue(id, out getbyId);
             return getbyId;
         }
 
         private void takePreference()
         {
             int preference_Id = _nextTask.Preference;
-            if((preference_Id!=0)&&(preference_Id!=_FirstFreeTimeKey)&&(_FirstFreeTime.FreeTime.AddDays(2.0).CompareTo(getById(preference_Id).FreeTime) >=0))
+            if((preference_Id!=0)&&(preference_Id!=_FirstFreeTimeKey)&&(((Employee)_FirstFreeTime).FreeTime.AddDays(2.0).CompareTo(((Employee)getById(preference_Id)).FreeTime) >=0))
                 {
                 _PreferResource = getById(preference_Id);
                 }

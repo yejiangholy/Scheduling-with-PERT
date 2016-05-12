@@ -4,3 +4,10 @@ C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.pdb
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll.config
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.dll
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.pdb
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.pdb
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\CPI.Graphing.GraphingEngine.Contracts.dll
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\CPI.Graphing.GraphingEngine.Contracts.pdb
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.exe.config
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.exe
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.exe

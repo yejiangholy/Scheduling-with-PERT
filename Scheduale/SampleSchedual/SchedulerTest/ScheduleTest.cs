@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using SampleSchedule.PropertyBags;
 using SampleSchedule.Processors;
+using CPI.Graphing.GraphingEngine.Contracts.Dc;
 
 namespace SchedulerTest
 {
@@ -13,12 +14,12 @@ namespace SchedulerTest
         [TestMethod]
         public void EdgeSelector_CriticalPath_LinearTasks()
         {
-            Dictionary<int, IEdge> Task = new Dictionary<int, IEdge>();
+            Dictionary<int, > Task = new Dictionary<int, Edge>();
             Dictionary<int, IResource> Resource = new Dictionary<int, IResource>();
-            Task.Add(1, new Edge
+            Task.Add(1, new Activity
             {
                 Id = 1,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<Edge>(),
                 Duration = 3,
                 Est = new DateTime(2015, 10, 3),
             });
@@ -26,28 +27,28 @@ namespace SchedulerTest
             Task.Add(2, new Edge
             {
                 Id = 2,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 10,
                 Est = new DateTime(2015, 10, 5),
             });
             Task.Add(3, new Edge
             {
                 Id = 3,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 3,
                 Est = new DateTime(2015, 10, 2),
             });
             Task.Add(4, new Edge
             {
                 Id = 4,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 4,
                 Est = new DateTime(2015, 10, 4),
             });
             Task.Add(5, new Edge
             {
                 Id = 5,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 3,
                 Est = new DateTime(2015, 10, 3),
             });
@@ -69,19 +70,19 @@ namespace SchedulerTest
             // assing dependency 
             var t2Depen = new List<IEdge>();
             t2Depen.Add(Task[1]);
-            Task[2].DependencyList = t2Depen;
+            Task[2].DependsOnList = t2Depen;
 
             var t3Depen = new List<IEdge>();
             t3Depen.Add(Task[2]);
-            Task[3].DependencyList = t3Depen;
+            Task[3].DependsOnList = t3Depen;
 
             var t4Depen = new List<IEdge>();
             t4Depen.Add(Task[3]);
-            Task[4].DependencyList = t4Depen;
+            Task[4].DependsOnList = t4Depen;
 
             var t5Depen = new List<IEdge>();
             t5Depen.Add(Task[4]);
-            Task[5].DependencyList = t5Depen;
+            Task[5].DependsOnList = t5Depen;
 
             //assign sucessor
             var t1Suc = new List<IEdge>();
@@ -125,7 +126,7 @@ namespace SchedulerTest
             Task.Add(1, new Edge
             {
                 Id = 1,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 3,
                 Est = new DateTime(2015, 10, 3),
             });
@@ -133,21 +134,21 @@ namespace SchedulerTest
             Task.Add(2, new Edge
             {
                 Id = 2,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 2,
                 Est = new DateTime(2015, 10, 5),
             });
             Task.Add(3, new Edge
             {
                 Id = 3,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 5,
                 Est = new DateTime(2015, 10, 2),
             });
             Task.Add(4, new Edge
             {
                 Id = 4,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 3,
                 Est = new DateTime(2015, 10, 2),
             });
@@ -165,15 +166,15 @@ namespace SchedulerTest
             // assing dependency 
             var t2Depen = new List<IEdge>();
             t2Depen.Add(Task[1]);
-            Task[2].DependencyList = t2Depen;
+            Task[2].DependsOnList = t2Depen;
 
             var t3Depen = new List<IEdge>();
             t3Depen.Add(Task[1]);
-            Task[3].DependencyList = t3Depen;
+            Task[3].DependsOnList = t3Depen;
 
             var t4Depen = new List<IEdge>();
             t4Depen.Add(Task[3]); t4Depen.Add(Task[2]);
-            Task[4].DependencyList = t4Depen;
+            Task[4].DependsOnList = t4Depen;
 
 
             //assign sucessor
@@ -210,7 +211,7 @@ namespace SchedulerTest
             Task.Add(1, new Edge
             {
                 Id = 1,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 3,
                 Est = new DateTime(2015, 10, 3),
             });
@@ -218,28 +219,28 @@ namespace SchedulerTest
             Task.Add(2, new Edge
             {
                 Id = 2,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 6,
                 Est = new DateTime(2015, 10, 5),
             });
             Task.Add(3, new Edge
             {
                 Id = 3,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 3,
                 Est = new DateTime(2015, 10, 2),
             });
             Task.Add(4, new Edge
             {
                 Id = 4,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 9,
                 Est = new DateTime(2015, 10, 2),
             });
             Task.Add(5, new Edge
             {
                 Id = 5,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 3,
                 Est = new DateTime(2015, 10, 2),
             });
@@ -255,13 +256,13 @@ namespace SchedulerTest
             // assing dependency 
             var t2Depen = new List<IEdge>();
             t2Depen.Add(Task[1]);
-            Task[2].DependencyList = t2Depen;
-            Task[3].DependencyList = t2Depen;
-            Task[4].DependencyList = t2Depen;
+            Task[2].DependsOnList = t2Depen;
+            Task[3].DependsOnList = t2Depen;
+            Task[4].DependsOnList = t2Depen;
 
             var t5Depen = new List<IEdge>();
             t5Depen.Add(Task[3]); t5Depen.Add(Task[2]); t5Depen.Add(Task[4]);
-            Task[5].DependencyList = t5Depen;
+            Task[5].DependsOnList = t5Depen;
 
 
             //assign sucessor
@@ -301,7 +302,7 @@ namespace SchedulerTest
             Task.Add(1, new Edge
             {
                 Id = 1,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration=3,
                 Est = new DateTime(2015, 10, 3),
             });
@@ -309,56 +310,56 @@ namespace SchedulerTest
             Task.Add(2, new Edge
             {
                 Id = 2,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration=10,
                 Est = new DateTime(2015, 10, 5),
             });
             Task.Add(3, new Edge
             {
                 Id = 3,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration=3,
                 Est = new DateTime(2015, 10, 2),
             });
             Task.Add(4, new Edge
             {
                 Id = 4,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 4,
                 Est = new DateTime(2015, 10, 4),
             });
             Task.Add(5, new Edge
             {
                 Id = 5,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration=3,
                 Est = new DateTime(2015, 10, 3),
             });
             Task.Add(6, new Edge
             {
                 Id = 6,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 4,
                 Est = new DateTime(2015, 10, 5),
             });
             Task.Add(7, new Edge
             {
                 Id = 7,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 7,
                 Est = new DateTime(2015, 10, 5),
             });
             Task.Add(8, new Edge
             {
                 Id = 8,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 1,
                 Est = new DateTime(2015, 10, 5),
             });
             Task.Add(9, new Edge
             {
                 Id = 9,
-                DependencyList = new List<IEdge>(),
+                DependsOnList = new List<IEdge>(),
                 Duration = 2,
                 Est = new DateTime(2015, 10, 10),
             });
@@ -380,35 +381,35 @@ namespace SchedulerTest
             // assing dependency 
             var t2Depen = new List<IEdge>();
             t2Depen.Add(Task[1]);
-            Task[2].DependencyList = t2Depen;
+            Task[2].DependsOnList = t2Depen;
 
             var t3Depen = new List<IEdge>();
             t3Depen.Add(Task[1]);
-            Task[3].DependencyList = t3Depen;
+            Task[3].DependsOnList = t3Depen;
 
             var t4Depen = new List<IEdge>();
             t4Depen.Add(Task[1]);
-            Task[4].DependencyList = t4Depen;
+            Task[4].DependsOnList = t4Depen;
 
             var t5Depen = new List<IEdge>();
             t5Depen.Add(Task[3]);
-            Task[5].DependencyList = t5Depen;
+            Task[5].DependsOnList = t5Depen;
 
             var t6Depen = new List<IEdge>();
             t6Depen.Add(Task[5]); t6Depen.Add(Task[4]);
-            Task[6].DependencyList = t6Depen;
+            Task[6].DependsOnList = t6Depen;
 
             var t7Depen = new List<IEdge>();
             t7Depen.Add(Task[2]);
-            Task[7].DependencyList = t7Depen;
+            Task[7].DependsOnList = t7Depen;
 
             var t8Depen = new List<IEdge>();
             t8Depen.Add(Task[6]);
-            Task[8].DependencyList = t8Depen;
+            Task[8].DependsOnList = t8Depen;
 
             var t9Depen = new List<IEdge>();
             t9Depen.Add(Task[7]); t9Depen.Add(Task[8]);
-            Task[9].DependencyList = t9Depen;
+            Task[9].DependsOnList = t9Depen;
 
             //assign sucessor
             var t1Suc = new List<IEdge>();

@@ -1,24 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using CPI.Graphing.GraphingEngine.Contracts.Dc;
 
 namespace MiddleConsumer.Property
 {
-    public interface IEdge
-    {
-        int Id { get; set; }
-        string Name { get; set; }
-        string DependsOnDisplay { get; }
-        string DependentsDisplay { get; }
-
-        INode HeadNode { get; set; }
-        INode TailNode { get; set; }
-
-        IList<IEdge> DependsOnList { get; set; }
-        IList<IEdge> DependentList { get; set; }
-
-        ScheduleTiming Timing { get; set; }
-    }
-
     public class Edge : IEdge
     {
         public int Id { get; set; }
@@ -36,6 +21,10 @@ namespace MiddleConsumer.Property
         public INode HeadNode { get; set; }
 
         public INode TailNode { get; set; }
+
+        public bool IsDummy { get; set; }
+
+        public ICollection<DrawingProperty> DrawingPropertyList { get; set; }
 
         public string DependsOnDisplay
         {

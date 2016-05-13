@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CPI.Graphing.GraphingEngine.Contracts">
+      <HintPath>..\..\..\..\output\CPI.Graphing.GraphingEngine.Contracts.dll</HintPath>
+    </Reference>
     <Reference Include="SampleSchedual, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SampleSchedual\bin\Debug\SampleSchedual.dll</HintPath>

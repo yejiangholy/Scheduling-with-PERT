@@ -2,6 +2,7 @@
 using SampleSchedule.Processors;
 using SampleSchedule.PropertyBags;
 using System;
+using CPI.Graphing.GraphingEngine.Contracts.Dc;
 using System.Collections.Generic;
 
 namespace SampleSchedule
@@ -16,14 +17,14 @@ namespace SampleSchedule
             printSchedule(scheduledList);
         }
 
-        private static void printFloatValue(List<IEdge> edgeList)
+        private static void printFloatValue(List<Activity> ActivityList)
         {
-            foreach (var edge in edgeList) Console.WriteLine("edge"+edge.Id+"has float value "+edge.Float);
+            foreach (var Activity in ActivityList) Console.WriteLine("Activity"+Activity.Id+"has float value "+Activity.Float);
             Console.ReadLine();
         }
-        private static void printSchedule(List<IEdge> edgeList)
+        private static void printSchedule(List<Activity> ActivityList)
         {
-            foreach (var edge in edgeList) Console.WriteLine(edge.ToString());
+            foreach (var Activity in ActivityList) Console.WriteLine(Activity.ToString());
             Console.ReadLine();
         }
 

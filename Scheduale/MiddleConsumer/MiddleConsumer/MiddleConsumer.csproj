@@ -33,11 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CPI.Graphing.GraphingEngine.Contracts">
+      <HintPath>..\..\..\..\output\CPI.Graphing.GraphingEngine.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="CPI.Graphing.GraphingEngine.Service">
+      <HintPath>..\..\..\..\output\CPI.Graphing.GraphingEngine.Service.dll</HintPath>
+    </Reference>
     <Reference Include="IUtilityData">
       <HintPath>..\..\IUtilityData\IUtilityData\bin\Debug\IUtilityData.dll</HintPath>
     </Reference>
     <Reference Include="SampleSchedual">
-      <HintPath>..\..\..\..\..\..\..\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll</HintPath>
+      <HintPath>..\..\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

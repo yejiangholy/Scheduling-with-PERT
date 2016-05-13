@@ -1,5 +1,6 @@
 ﻿using MiddleConsumer.Factory;
 using SampleSchedule.Processors;
+using System;
 namespace MiddleConsumer
 {
     class Program
@@ -8,7 +9,8 @@ namespace MiddleConsumer
         {
             var factory = new GraphFactory();
             var inputGraph = factory.Create();
-            var avaliableResource = 1;
+            Console.WriteLine("Please enter how many people you have or 0 if do not konw");
+            var avaliableResource = Console.Read();
 
             var feedDataFactory = new ScheduleDataFactory();
             var feedData = feedDataFactory.Create(inputGraph, avaliableResource);

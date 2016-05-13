@@ -1,16 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-
+using CPI.Graphing.GraphingEngine.Contracts.Dc;
 
 namespace MiddleConsumer.Property
 {
-    public interface INode
-    {
-        int Id { get; set; }
-        string Name { get; set; }
-        IList<IEdge> TailList { get; set; }
-        IList<IEdge> HeadList { get; set; }
-    }
 
     public class Node : INode
     {
@@ -21,6 +14,8 @@ namespace MiddleConsumer.Property
         public IList<IEdge> TailList { get; set; }
 
         public IList<IEdge> HeadList { get; set; }
+
+        public ICollection<DrawingProperty> DrawingPropertyList { get; set; }
 
 
         public Node()

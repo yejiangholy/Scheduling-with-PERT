@@ -36,6 +36,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CPI.Graphing.GraphingEngine.Contracts">
+      <HintPath>..\..\..\..\output\CPI.Graphing.GraphingEngine.Contracts.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,7 +55,7 @@
     <Compile Include="Processors\Scheduler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyBags\Edge.cs" />
+    <Compile Include="PropertyBags\Activity.cs" />
     <Compile Include="PropertyBags\Employee.cs" />
     <Compile Include="PropertyBags\NextResource.cs" />
     <Compile Include="PropertyBags\ScheduleData.cs" />

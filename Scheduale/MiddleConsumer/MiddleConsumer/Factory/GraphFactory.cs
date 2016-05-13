@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MiddleConsumer.Property;
+using CPI.Graphing.GraphingEngine.Contracts.Dc;
 
 namespace MiddleConsumer.Factory
 {
@@ -83,8 +83,8 @@ namespace MiddleConsumer.Factory
                 EdgeList[0].HeadNode = statNode;
                 EdgeList[0].TailNode = firstNode;
                 EdgeList[0].DependsOnList = new List<IEdge>();
-                EdgeList[0].Timing.Duration = 1;
-                EdgeList[0].Timing.Est = new DateTime(2015, 10, 1);
+                (EdgeList[0] as MiddleConsumer.Property.Edge).Timing.Duration = 1;
+                (EdgeList[0] as MiddleConsumer.Property.Edge).Timing.Est = new DateTime(2015, 10, 1);
 
                 EdgeList.Add(edgeB);
                 EdgeList[1].Id = 1;
@@ -92,8 +92,8 @@ namespace MiddleConsumer.Factory
                 EdgeList[1].HeadNode = firstNode;
                 EdgeList[1].TailNode = secondNode;
                 EdgeList[1].DependsOnList.Add(edgeA);
-                EdgeList[1].Timing.Duration = 1;
-                EdgeList[1].Timing.Est = new DateTime(2015, 10, 2);
+                (EdgeList[1] as MiddleConsumer.Property.Edge).Timing.Duration = 1;
+                (EdgeList[1] as MiddleConsumer.Property.Edge).Timing.Est = new DateTime(2015, 10, 2);
 
                 EdgeList.Add(edgeC);
                 EdgeList[2].Id = 2;
@@ -101,8 +101,8 @@ namespace MiddleConsumer.Factory
                 EdgeList[2].HeadNode = firstNode;
                 EdgeList[2].TailNode = thirdNode;
                 EdgeList[2].DependsOnList.Add(edgeA);
-                EdgeList[2].Timing.Duration = 1;
-                EdgeList[2].Timing.Est = new DateTime(2015, 10, 2);
+                (EdgeList[2] as MiddleConsumer.Property.Edge).Timing.Duration = 1;
+                (EdgeList[2] as MiddleConsumer.Property.Edge).Timing.Est = new DateTime(2015, 10, 2);
 
                 EdgeList.Add(edgeD);
                 EdgeList[3].Id = 3;
@@ -110,8 +110,8 @@ namespace MiddleConsumer.Factory
                 EdgeList[3].HeadNode = secondNode;
                 EdgeList[3].TailNode = fourthNode;
                 EdgeList[3].DependsOnList.Add(edgeB);
-                EdgeList[3].Timing.Duration = 1;
-                EdgeList[3].Timing.Est = new DateTime(2015, 10, 4);
+                (EdgeList[3] as MiddleConsumer.Property.Edge).Timing.Duration = 1;
+                (EdgeList[3] as MiddleConsumer.Property.Edge).Timing.Est = new DateTime(2015, 10, 4);
 
                 EdgeList.Add(edgeE);
                 EdgeList[4].Id = 4;
@@ -119,8 +119,8 @@ namespace MiddleConsumer.Factory
                 EdgeList[4].HeadNode = thirdNode;
                 EdgeList[4].TailNode = fourthNode;
                 EdgeList[4].DependsOnList.Add(edgeC);
-                EdgeList[4].Timing.Duration = 2;
-                EdgeList[4].Timing.Est = new DateTime(2015, 10, 4);
+                (EdgeList[4] as MiddleConsumer.Property.Edge).Timing.Duration = 2;
+                (EdgeList[4] as MiddleConsumer.Property.Edge).Timing.Est = new DateTime(2015, 10, 4);
 
                 EdgeList.Add(edgeF);
                 EdgeList[5].Id = 5;
@@ -128,8 +128,8 @@ namespace MiddleConsumer.Factory
                 EdgeList[5].HeadNode = fourthNode;
                 EdgeList[5].TailNode = finishNode;
                 EdgeList[5].DependsOnList.Add(edgeD); EdgeList[4].DependsOnList.Add(edgeE);
-                EdgeList[5].Timing.Duration = 1;
-                EdgeList[5].Timing.Est = new DateTime(2015, 10, 3);
+                (EdgeList[5] as MiddleConsumer.Property.Edge).Timing.Duration = 1;
+                (EdgeList[5] as MiddleConsumer.Property.Edge).Timing.Est = new DateTime(2015, 10, 3);
             }
         }
 }

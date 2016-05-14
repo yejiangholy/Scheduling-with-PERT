@@ -4,7 +4,7 @@ using CPI.Graphing.GraphingEngine.Contracts.Dc;
 
 namespace MiddleConsumer.Property
 {
-    public class Edge : IEdge
+    public class Task : IEdge
     {
         public int Id { get; set; }
 
@@ -62,7 +62,7 @@ namespace MiddleConsumer.Property
             }
         }
 
-        public Edge()
+        public Task()
         {
             DependsOnList = new List<IEdge>();
             DependentList = new List<IEdge>();

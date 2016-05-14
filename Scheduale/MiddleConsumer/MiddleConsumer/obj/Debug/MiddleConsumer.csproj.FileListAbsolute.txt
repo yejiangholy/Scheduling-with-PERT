@@ -16,6 +16,6 @@ C:\Scheduling-with-PERT\Scheduale\MiddleConsumer\MiddleConsumer\bin\Debug\Sample
 C:\Scheduling-with-PERT\Scheduale\MiddleConsumer\MiddleConsumer\bin\Debug\CPI.Core.Environment.pdb
 C:\Scheduling-with-PERT\Scheduale\MiddleConsumer\MiddleConsumer\bin\Debug\CPI.Core.pdb
 C:\Scheduling-with-PERT\Scheduale\MiddleConsumer\MiddleConsumer\bin\Debug\CPI.Core.Utilities.pdb
-C:\Scheduling-with-PERT\Scheduale\MiddleConsumer\MiddleConsumer\obj\Debug\MiddleConsumer.csprojResolveAssemblyReference.cache
 C:\Scheduling-with-PERT\Scheduale\MiddleConsumer\MiddleConsumer\obj\Debug\MiddleConsumer.exe
 C:\Scheduling-with-PERT\Scheduale\MiddleConsumer\MiddleConsumer\obj\Debug\MiddleConsumer.pdb
+C:\Scheduling-with-PERT\Scheduale\MiddleConsumer\MiddleConsumer\obj\Debug\MiddleConsumer.csprojResolveAssemblyReference.cache

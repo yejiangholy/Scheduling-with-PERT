@@ -53,16 +53,16 @@ namespace SampleSchedule.Processors
         {
             var ActivityHash = _ScheduleData.ActivityHash;
             var ActivityList = new List<Activity>();
-            for(int i=1; i<=ActivityHash.Count;i++)
+            for (int i = 0; i < ActivityHash.Count; i++)
             {
                 ActivityList.Add(ActivityHash[i]);
             }
 
             ActivityList[0].Eft = ActivityList[0].Est.AddDays(ActivityList[0].Duration);
 
-            for(int i=1; i<ActivityList.Count;i++)
+            for (int i = 1; i < ActivityList.Count; i++)
             {
-                foreach(Activity predecessor in ActivityList[i].DependsOnList)
+                foreach (Activity predecessor in ActivityList[i].DependsOnList)
                 {
                     if (ActivityList[i].Est.CompareTo(predecessor.Eft) < 0)
                         ActivityList[i].Est = predecessor.Eft;
@@ -75,19 +75,19 @@ namespace SampleSchedule.Processors
         {
             var ActivityHash = _ScheduleData.ActivityHash;
             var ActivityList = new List<Activity>();
-            for (int i = 1; i <= ActivityHash.Count; i++)
+            for (int i = 0; i < ActivityHash.Count; i++)
             {
                 ActivityList.Add(ActivityHash[i]);
             }
             var size = ActivityList.Count;
 
             ActivityList[size - 1].Lft = ActivityList[size - 1].Eft;
-            ActivityList[size - 1].Lst = ActivityList[size-1].Lft.Subtract(new TimeSpan(ActivityList[size-1].Duration*24,0,0));
+            ActivityList[size - 1].Lst = ActivityList[size - 1].Lft.Subtract(new TimeSpan(ActivityList[size - 1].Duration * 24, 0, 0));
 
-            for(int i = size-2;i>=0;i--)
+            for (int i = size - 2; i >= 0; i--)
             {
                 var earlistStartTimeInSuccessor = new DateTime(9998, 12, 7);
-                foreach(Activity sucessor in ActivityList[i].DependentList)
+                foreach (Activity sucessor in ActivityList[i].DependentList)
                 {
                     if (sucessor.Lst.CompareTo(earlistStartTimeInSuccessor) < 0)
                         earlistStartTimeInSuccessor = sucessor.Lst;
@@ -100,13 +100,13 @@ namespace SampleSchedule.Processors
         private void assignFloatValue()
         {
             var ActivityHash = _ScheduleData.ActivityHash;
-            foreach(var key in ActivityHash.Keys)
+            foreach (var key in ActivityHash.Keys)
             {
                 var Activity = ActivityHash[key];
                 Activity.Float = Activity.Lst.Subtract(Activity.Est).TotalDays;
             }
 
-            
+
         }
 
         private void createSchedule()
@@ -120,7 +120,7 @@ namespace SampleSchedule.Processors
             NextResource nextResource = null;
             if (givenResourceNum)
             {
-               nextResource = _ResourceSelector.SelectNext(_ScheduleData.ResourceHash, nextTask);
+                nextResource = _ResourceSelector.SelectNext(_ScheduleData.ResourceHash, nextTask);
             }
             else
             {
@@ -148,13 +148,14 @@ namespace SampleSchedule.Processors
 
         private void assignFinishTime(Activity nextActivity)
         {
-            nextActivity.FinishTime = nextActivity.StartTime + new TimeSpan(nextActivity.Duration, 0, 0, 0);
+            var duration = nextActivity.Duration;
+            nextActivity.FinishTime = nextActivity.StartTime.AddDays(duration);
         }
 
         private void resourceSetInfo(Activity nextActivity, NextResource nextResource)
         {
             ((Employee)nextResource.Resource).StartWork = nextActivity.StartTime;
-            ((Employee)nextResource.Resource).FreeTime =  nextActivity.FinishTime;
+            ((Employee)nextResource.Resource).FreeTime = nextActivity.FinishTime;
         }
 
     }

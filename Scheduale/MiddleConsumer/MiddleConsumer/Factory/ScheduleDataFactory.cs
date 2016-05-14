@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SampleSchedule.PropertyBags;
 using CPI.Graphing.GraphingEngine.Contracts.Dc;
+using MiddleConsumer.Property;
 
 namespace MiddleConsumer.Factory
 {
@@ -34,15 +35,15 @@ namespace MiddleConsumer.Factory
 
         private void assignTaskHash(IGraph graph)
         {
-            for (int i = 0; i < graph.EdgeList.Count; i++)
+            for (int i = 0; i <graph.EdgeList.Count; i++)
             {
                 TaskHash.Add(i, new Activity
                 {
                     Id = graph.EdgeList[i].Id,
-                    Duration = (graph.EdgeList[i] as MiddleConsumer.Property.Edge).Timing.Duration,
-                    DependsOnList = new List<IEdge>(),
+                    Duration = (graph.EdgeList[i] as Task).Timing.Duration,
+                DependsOnList = new List<IEdge>(),
                     DependentList = new List<IEdge>(),
-                    Est = (graph.EdgeList[i] as MiddleConsumer.Property.Edge).Timing.Est,
+                    Est = (graph.EdgeList[i] as Task).Timing.Est,
                 });
             }
         }
@@ -67,7 +68,7 @@ namespace MiddleConsumer.Factory
             {
                 foreach (var edge in graph.EdgeList[i].DependsOnList)
                 {
-                    ((Activity)TaskHash[i]).DependsOnList.Add(TaskHash[edge.Id]);
+                    TaskHash[i].DependsOnList.Add(TaskHash[edge.Id]);
                 }
             }
         }
@@ -78,7 +79,7 @@ namespace MiddleConsumer.Factory
             {
                 foreach(var edge in graph.EdgeList[i].DependentList)
                 {
-                    ((Activity)TaskHash[i]).DependentList.Add(TaskHash[edge.Id]);
+                    TaskHash[i].DependentList.Add(TaskHash[edge.Id]);
                 }
             }
         }

@@ -44,11 +44,11 @@ namespace SampleSchedual.Processors
             {
                 Employee nextOne = new Employee
                 {
-                    Name = string.Format("E{0}", (_ResourceHash.Count + 1)),
-                    FreeTime = nextTask.Est.Add(new TimeSpan(nextTask.Duration * 24, 0, 0)),
-                    StartWork = nextTask.Est,
+                    Name = string.Format("E{0}", (_ResourceHash.Count)),
+                    FreeTime = nextTask.Est.AddDays(-1),
+                    StartWork = nextTask.Est.AddDays(-2),
                 };
-                _ResourceHash.Add(_ResourceHash.Count + 1, nextOne );
+                _ResourceHash.Add(_ResourceHash.Count, nextOne );
                 _PreferResource = nextOne;
                 assignNextResource();
                 return _Response;
@@ -66,7 +66,7 @@ namespace SampleSchedual.Processors
             Employee nextOne = null;
             foreach(var e in _ResourceHash)
             {
-                if (((Employee)e.Value).FreeTime.CompareTo(_nextTask.Est)<0)
+                if (((Employee)e.Value).FreeTime.CompareTo(_nextTask.Est)<=0)
                 {
                     nextOne = (Employee)e.Value;
                     return nextOne;
@@ -88,7 +88,7 @@ namespace SampleSchedual.Processors
 
         private void findFirstFreeTime()
         {
-            _FirstFreeTime = _ResourceHash[1];
+            _FirstFreeTime = _ResourceHash[0];
 
             foreach (var e in _ResourceHash)
             {

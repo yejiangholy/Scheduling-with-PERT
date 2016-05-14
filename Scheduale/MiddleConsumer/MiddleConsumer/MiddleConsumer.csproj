@@ -58,9 +58,7 @@
     <Compile Include="Factory\GraphFactory.cs" />
     <Compile Include="Factory\ScheduleDataFactory.cs" />
     <Compile Include="Factory\UtilityDataFactory.cs" />
-    <Compile Include="PropertyBag\Edge.cs" />
-    <Compile Include="PropertyBag\Graph.cs" />
-    <Compile Include="PropertyBag\Node.cs" />
+    <Compile Include="PropertyBag\Task.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyBag\ScheduleTiming.cs" />

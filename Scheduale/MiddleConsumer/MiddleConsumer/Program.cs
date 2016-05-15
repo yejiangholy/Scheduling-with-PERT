@@ -20,8 +20,11 @@ namespace MiddleConsumer
 
             var scheduler = new Scheduler();
             var scheduledList = scheduler.Schedule(feedData);
+            var attendenceChart = scheduler.AttendenceChart;
 
             printSchedule(scheduledList);
+            Console.WriteLine();
+            printAttendence(attendenceChart);
 
             var utilityFactory = new UtilityDataFactory();
             var utilityDataList = utilityFactory.Create(scheduledList);
@@ -30,6 +33,19 @@ namespace MiddleConsumer
         private static void printSchedule(List<Activity> ActivityList)
         {
             foreach (var Activity in ActivityList) Console.WriteLine(Activity.ToString());
+            Console.ReadLine();
+        }
+
+        private static void printAttendence(bool[,] chart)
+        {
+            for(int j=0;j<chart.GetLength(0);j++)
+            {
+                for(int i=0;i<chart.GetLength(1);i++)
+                {
+                    Console.Write(chart[j, i]+ " ");
+                }
+                Console.WriteLine();
+            }
             Console.ReadLine();
         }
     }

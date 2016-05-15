@@ -32,10 +32,10 @@ namespace SampleSchedual.Processors
         private List<Activity> generateEarlyStartList(List<Activity> list)
         {
             var earlyStart = new List<Activity>();
-            DateTime earliestStartTime = findMinEst(list);
+            var earliestStartTime = findMinEst(list);
             foreach(var Activity in list)
             {
-                if (Activity.Est.CompareTo(earliestStartTime)==0)
+                if (Activity.Est-earliestStartTime==0)
                     earlyStart.Add(Activity);
             }
             return earlyStart;
@@ -43,7 +43,7 @@ namespace SampleSchedual.Processors
 
         private Activity findMinFloat(List<Activity> list)
         {
-            double min = 1000.0;
+            double min =9999.0;
             Activity minFloat = new Activity();
             foreach(var Activity in list)
             {
@@ -77,13 +77,13 @@ namespace SampleSchedual.Processors
             return false;
         }
 
-        private DateTime findMinEst(List<Activity> ActivityList)
+        private int findMinEst(List<Activity> ActivityList)
         {
-            var min = new DateTime(9999, 11, 11);
+            var min = 9999;
 
             foreach (var Activity in ActivityList)
             {
-                if (Activity.Est.CompareTo(min) >= 0) continue;
+                if (Activity.Est-min >= 0) continue;
                 min = Activity.Est;
             }
 

@@ -1,5 +1,4 @@
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.pdb
-C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleScedule.csprojResolveAssemblyReference.cache
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.pdb
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll.config
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll

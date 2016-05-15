@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using SampleSchedule.PropertyBags;
 using CPI.Graphing.GraphingEngine.Contracts.Dc;
@@ -52,11 +52,13 @@ namespace MiddleConsumer.Factory
         {
                 for (int i = 0; i < num; i++)
                 {
-                    EmployeeHash.Add(i, new Employee
-                    {
-                        Name = string.Format("E{0}", i),
-                        FreeTime = new DateTime(2015, 10, 1),
-                        StartWork = new DateTime(2014, 10, 1),
+                EmployeeHash.Add(i, new Employee
+                {
+                    Id = i,
+                    Name = string.Format("E{0}", i),
+                    FreeTime = 0,
+                    StartWork = 0,
+                    AttendenceList = new ArrayList(),
                     });
                 }
 

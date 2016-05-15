@@ -30,7 +30,7 @@ namespace MiddleConsumer.Factory
                 DependtList = new List<int>();
                 foreach (var edge in edgeList)
                 {
-                    if (((Activity)edge).FinishTime.CompareTo(((Activity)edgeList[i]).StartTime) == 0)
+                    if (edge.FinishTime.CompareTo(edgeList[i].StartTime) == 0)
                     {
                         DependtList.Add(edge.Id);
                     }

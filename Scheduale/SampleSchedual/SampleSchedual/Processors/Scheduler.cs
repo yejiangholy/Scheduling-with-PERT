@@ -159,8 +159,11 @@ namespace SampleSchedule.Processors
            
             ((Employee)nextResource.Resource).StartWork = nextActivity.StartTime;
             ((Employee)nextResource.Resource).FreeTime = nextActivity.FinishTime;
-            ((Employee)nextResource.Resource).AttendenceList.Add(nextActivity.StartTime);
-            ((Employee)nextResource.Resource).AttendenceList.Add(nextActivity.FinishTime);
+
+            for (int i = nextActivity.StartTime; i < nextActivity.FinishTime; i++)
+            {
+                ((Employee)nextResource.Resource).AttendenceList.Add(i);
+            }
 
             if (_ScheduleData.ActivityHash.Count() == 1)
             {
@@ -185,14 +188,10 @@ namespace SampleSchedule.Processors
             for(int i=0;i<AttendenceChartRows; i++)
             {
                 ArrayList attendenceList = ((Employee)_ScheduleData.ResourceHash[i]).AttendenceList;
-                for(int k=0;k<attendenceList.Count;k+=2)
+                for (int k = 0; k < attendenceList.Count; k++)
                 {
-                    for(int j=(int)attendenceList[k];j<(int)attendenceList[k+1];j++)
-                    {
-                        AttendenceChart[i, j] = true;
-                    }
+                    AttendenceChart[i, (int)attendenceList[k]] = true;
                 }
-
             }
         }
 

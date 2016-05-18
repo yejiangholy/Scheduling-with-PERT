@@ -1,5 +1,4 @@
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.pdb
-C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleScedule.csprojResolveAssemblyReference.cache
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.pdb
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll.config
 C:\CPI\Poc\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll
@@ -8,9 +7,6 @@ C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedua
 C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.pdb
 C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\CPI.Graphing.GraphingEngine.Contracts.dll
 C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\CPI.Graphing.GraphingEngine.Contracts.pdb
-C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.exe.config
-C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.exe
-C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.exe
 C:\Scheduling-with-PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.pdb
 C:\Scheduling-with-PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\CPI.Graphing.GraphingEngine.Contracts.dll
 C:\Scheduling-with-PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\CPI.Graphing.GraphingEngine.Contracts.pdb
@@ -18,3 +14,8 @@ C:\Scheduling-with-PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\Sample
 C:\Scheduling-with-PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll.config
 C:\Scheduling-with-PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll
 C:\Scheduling-with-PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.dll
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll.config
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleScedule.csprojResolveAssemblyReference.cache
+C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.dll
+C:\Scheduling-with-PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleScedule.csprojResolveAssemblyReference.cache

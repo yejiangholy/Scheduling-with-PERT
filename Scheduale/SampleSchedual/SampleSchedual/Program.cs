@@ -17,12 +17,12 @@ namespace SampleSchedule
             printSchedule(scheduledList);
         }
 
-        private static void printFloatValue(List<Activity> ActivityList)
+        private static void printFloatValue(List<Tasks> ActivityList)
         {
             foreach (var Activity in ActivityList) Console.WriteLine("Activity"+Activity.Id+"has float value "+Activity.Float);
             Console.ReadLine();
         }
-        private static void printSchedule(List<Activity> ActivityList)
+        private static void printSchedule(List<Tasks> ActivityList)
         {
             foreach (var Activity in ActivityList) Console.WriteLine(Activity.ToString());
             Console.ReadLine();

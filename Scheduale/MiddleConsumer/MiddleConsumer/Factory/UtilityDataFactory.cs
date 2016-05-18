@@ -6,7 +6,7 @@ namespace MiddleConsumer.Factory
 {
     public interface IUtilityDataFactory
     {
-        List<UtilityData> Create(List<Activity> edgelist);
+        List<UtilityData> Create(List<Tasks> edgelist);
     }
     public class UtilityDataFactory : IUtilityDataFactory
     {
@@ -14,7 +14,7 @@ namespace MiddleConsumer.Factory
         private List<UtilityData> utilityList;
         private ICollection<int> DependtList;
         #endregion Declarations 
-        public  List<UtilityData> Create(List<Activity> edgeList )
+        public  List<UtilityData> Create(List<Tasks> edgeList )
         {
             utilityList = new List<UtilityData>();
 
@@ -23,14 +23,14 @@ namespace MiddleConsumer.Factory
             return utilityList;
         }
 
-        private void assignUtilityData(List<Activity> edgeList)
+        private void assignUtilityData(List<Tasks> edgeList)
         {
             for (int i = 0; i < edgeList.Count; i++)
             {
                 DependtList = new List<int>();
                 foreach (var edge in edgeList)
                 {
-                    if (((Activity)edge).FinishTime.CompareTo(((Activity)edgeList[i]).StartTime) == 0)
+                    if (edge.FinishTime.CompareTo(edgeList[i].StartTime) == 0)
                     {
                         DependtList.Add(edge.Id);
                     }

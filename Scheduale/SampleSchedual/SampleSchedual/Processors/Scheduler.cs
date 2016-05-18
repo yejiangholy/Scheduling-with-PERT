@@ -1,6 +1,6 @@
 ﻿using SampleSchedual.Processors;
 using SampleSchedule.PropertyBags;
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CPI.Graphing.GraphingEngine.Contracts.Dc;
@@ -9,7 +9,7 @@ namespace SampleSchedule.Processors
 {
     public interface IScheduler
     {
-        List<Activity> Schedule(ScheduleData scheduleData);
+        List<Tasks> Schedule(ScheduleData scheduleData);
     }
 
     public class Scheduler : IScheduler
@@ -18,15 +18,17 @@ namespace SampleSchedule.Processors
 
         private ResourceSelector _ResourceSelector = new ResourceSelector();
         private ActivitySelector _ActivitySelector = new ActivitySelector();
-        private List<Activity> _Response;
+        private List<Tasks> _Response;
         private ScheduleData _ScheduleData;
         private bool givenResourceNum;
-
+        private int AttendenceChartColumns;
+        private int AttendenceChartRows;
+        public bool[,] AttendenceChart;
         #endregion Declarations
 
-        public List<Activity> Schedule(ScheduleData scheduleData)
+        public List<Tasks> Schedule(ScheduleData scheduleData)
         {
-            _Response = new List<Activity>();
+            _Response = new List<Tasks>();
             _ScheduleData = scheduleData;
             givenResourceNum = (_ScheduleData.ResourceHash.Count != 0);
 
@@ -52,29 +54,29 @@ namespace SampleSchedule.Processors
         private void WalkingAhead()
         {
             var ActivityHash = _ScheduleData.ActivityHash;
-            var ActivityList = new List<Activity>();
+            var ActivityList = new List<Tasks>();
             for (int i = 0; i < ActivityHash.Count; i++)
             {
                 ActivityList.Add(ActivityHash[i]);
             }
 
-            ActivityList[0].Eft = ActivityList[0].Est.AddDays(ActivityList[0].Duration);
+            ActivityList[0].Eft = ActivityList[0].Est+ ActivityList[0].Duration;
 
             for (int i = 1; i < ActivityList.Count; i++)
             {
-                foreach (Activity predecessor in ActivityList[i].DependsOnList)
+                foreach (Tasks predecessor in ActivityList[i].DependsOnList)
                 {
                     if (ActivityList[i].Est.CompareTo(predecessor.Eft) < 0)
                         ActivityList[i].Est = predecessor.Eft;
                 }
-                ActivityList[i].Eft = ActivityList[i].Est.AddDays(ActivityList[i].Duration);
+                ActivityList[i].Eft = ActivityList[i].Est+ActivityList[i].Duration;
             }
         }
 
         private void WalkingBack()
         {
             var ActivityHash = _ScheduleData.ActivityHash;
-            var ActivityList = new List<Activity>();
+            var ActivityList = new List<Tasks>();
             for (int i = 0; i < ActivityHash.Count; i++)
             {
                 ActivityList.Add(ActivityHash[i]);
@@ -82,18 +84,18 @@ namespace SampleSchedule.Processors
             var size = ActivityList.Count;
 
             ActivityList[size - 1].Lft = ActivityList[size - 1].Eft;
-            ActivityList[size - 1].Lst = ActivityList[size - 1].Lft.Subtract(new TimeSpan(ActivityList[size - 1].Duration * 24, 0, 0));
+            ActivityList[size - 1].Lst = ActivityList[size - 1].Lft-ActivityList[size - 1].Duration;
 
             for (int i = size - 2; i >= 0; i--)
             {
-                var earlistStartTimeInSuccessor = new DateTime(9998, 12, 7);
-                foreach (Activity sucessor in ActivityList[i].DependentList)
+                var earlistStartTimeInSuccessor = 9999;
+                foreach (Tasks sucessor in ActivityList[i].DependentList)
                 {
                     if (sucessor.Lst.CompareTo(earlistStartTimeInSuccessor) < 0)
                         earlistStartTimeInSuccessor = sucessor.Lst;
                 }
                 ActivityList[i].Lft = earlistStartTimeInSuccessor;
-                ActivityList[i].Lst = ActivityList[i].Lft.Subtract(new TimeSpan(ActivityList[i].Duration * 24, 0, 0));
+                ActivityList[i].Lst = ActivityList[i].Lft- ActivityList[i].Duration;
             }
         }
 
@@ -103,7 +105,7 @@ namespace SampleSchedule.Processors
             foreach (var key in ActivityHash.Keys)
             {
                 var Activity = ActivityHash[key];
-                Activity.Float = Activity.Lst.Subtract(Activity.Est).TotalDays;
+                Activity.Float = Activity.Lst-Activity.Est;
             }
 
 
@@ -134,7 +136,7 @@ namespace SampleSchedule.Processors
             _ScheduleData.ActivityHash.Remove(nextTask.Id);
         }
 
-        private void assignNextActivity(Activity nextActivity, NextResource nextResource)
+        private void assignNextActivity(Tasks nextActivity, NextResource nextResource)
         {
             nextActivity.TakenBy = nextResource.Resource;
             nextActivity.Schedule = true;
@@ -146,16 +148,51 @@ namespace SampleSchedule.Processors
             assignFinishTime(nextActivity);
         }
 
-        private void assignFinishTime(Activity nextActivity)
+        private void assignFinishTime(Tasks nextActivity)
         {
             var duration = nextActivity.Duration;
-            nextActivity.FinishTime = nextActivity.StartTime.AddDays(duration);
+            nextActivity.FinishTime = nextActivity.StartTime+duration;
         }
 
-        private void resourceSetInfo(Activity nextActivity, NextResource nextResource)
+        private void resourceSetInfo(Tasks nextActivity, NextResource nextResource)
         {
+           
             ((Employee)nextResource.Resource).StartWork = nextActivity.StartTime;
             ((Employee)nextResource.Resource).FreeTime = nextActivity.FinishTime;
+
+            for (int i = nextActivity.StartTime; i < nextActivity.FinishTime; i++)
+            {
+                ((Employee)nextResource.Resource).AttendenceList.Add(i+1);
+            }
+
+            if (_ScheduleData.ActivityHash.Count() == 1)
+            {
+                AttendenceChartColumns = nextActivity.FinishTime;
+                AttendenceChartRows = _ScheduleData.ResourceHash.Count;
+                CreateAttendenceChart();
+            }
+        }
+
+        private void CreateAttendenceChart()
+        {
+            AttendenceChart = new bool[AttendenceChartRows, AttendenceChartColumns];
+
+            for(int j =0;j<AttendenceChartRows;j++)
+            {
+                for(int i=0;i<AttendenceChartColumns;i++)
+                {
+                    AttendenceChart[j, i] = false;
+                }
+            }
+
+            for(int i=0;i<AttendenceChartRows; i++)
+            {
+                ArrayList attendenceList = ((Employee)_ScheduleData.ResourceHash[i]).AttendenceList;
+                for (int k = 0; k < attendenceList.Count; k++)
+                {
+                    AttendenceChart[i, (int)attendenceList[k]-1] = true;
+                }
+            }
         }
 
     }

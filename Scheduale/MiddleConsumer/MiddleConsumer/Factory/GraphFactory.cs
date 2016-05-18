@@ -88,7 +88,7 @@ namespace MiddleConsumer.Factory
             dependentList_A.Add(edgeB); dependentList_A.Add(edgeC);
             EdgeList[0].DependentList = dependentList_A;
                 (EdgeList[0] as Task).Timing.Duration = 1;
-                (EdgeList[0] as Task).Timing.Est = new DateTime(2015, 10, 1);
+                (EdgeList[0] as Task).Timing.Est = 0;
 
                 EdgeList.Add(edgeB);
                 EdgeList[1].Id = 1;
@@ -100,7 +100,7 @@ namespace MiddleConsumer.Factory
             dependentList_B.Add(edgeD);
             EdgeList[1].DependentList = dependentList_B;
             (EdgeList[1] as Task).Timing.Duration = 1;
-                (EdgeList[1] as Task).Timing.Est = new DateTime(2015, 10, 2);
+                (EdgeList[1] as Task).Timing.Est = 1;
 
                 EdgeList.Add(edgeC);
                 EdgeList[2].Id = 2;
@@ -112,7 +112,7 @@ namespace MiddleConsumer.Factory
             dependentList_C.Add(edgeE);
             EdgeList[2].DependentList = dependentList_C;
             (EdgeList[2] as Task).Timing.Duration = 1;
-                (EdgeList[2] as Task).Timing.Est = new DateTime(2015, 10, 2);
+                (EdgeList[2] as Task).Timing.Est = 1;
 
                 EdgeList.Add(edgeD);
                 EdgeList[3].Id = 3;
@@ -124,7 +124,7 @@ namespace MiddleConsumer.Factory
             dependentList_D.Add(edgeF);
             EdgeList[3].DependentList = dependentList_D;
             (EdgeList[3] as Task).Timing.Duration = 1;
-                (EdgeList[3] as Task).Timing.Est = new DateTime(2015, 10, 4);
+                (EdgeList[3] as Task).Timing.Est = 2;
 
                 EdgeList.Add(edgeE);
                 EdgeList[4].Id = 4;
@@ -134,7 +134,7 @@ namespace MiddleConsumer.Factory
                 EdgeList[4].DependsOnList.Add(edgeC);
             EdgeList[4].DependentList = dependentList_D;
                 (EdgeList[4] as Task).Timing.Duration = 2;
-                (EdgeList[4] as Task).Timing.Est = new DateTime(2015, 10, 4);
+                (EdgeList[4] as Task).Timing.Est = 2;
 
                 EdgeList.Add(edgeF);
                 EdgeList[5].Id = 5;
@@ -144,7 +144,7 @@ namespace MiddleConsumer.Factory
                 EdgeList[5].DependentList = new List<IEdge>();
                 EdgeList[5].DependsOnList.Add(edgeD); EdgeList[5].DependsOnList.Add(edgeE);
                 (EdgeList[5] as Task).Timing.Duration = 1;
-                (EdgeList[5] as Task).Timing.Est = new DateTime(2015, 10, 3);
+                (EdgeList[5] as Task).Timing.Est = 3;
             }
         }
 }

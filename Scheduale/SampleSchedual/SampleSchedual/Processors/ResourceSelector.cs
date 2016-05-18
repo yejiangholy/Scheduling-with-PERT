@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using SampleSchedule.Factories;
 using CPI.Graphing.GraphingEngine.Contracts.Dc;
-using System;
+using System.Collections;
 
 namespace SampleSchedual.Processors
 {
     public interface IResourceSelector
     {
-        NextResource SelectNext(Dictionary<int, IResource> resourceHash,Activity nextTask);
+        NextResource SelectNext(Dictionary<int, IResource> resourceHash,Tasks nextTask);
     }
 
     public class ResourceSelector : IResourceSelector
     {
         #region Declarations
-        private Activity _nextTask;
+        private Tasks _nextTask;
         private IResource _FirstFreeTime;
+        private IResource _SuitableOneInTime;
         private int _FirstFreeTimeKey;
         private IResource _PreferResource;
         private Dictionary<int, IResource> _ResourceHash;
@@ -23,19 +24,19 @@ namespace SampleSchedual.Processors
 
         #endregion Declarations
 
-        public NextResource SelectNext(Dictionary<int, IResource> resourceHash, Activity nextTask)
+        public NextResource SelectNext(Dictionary<int, IResource> resourceHash, Tasks nextTask)
         {
             _ResourceHash = resourceHash;
             _nextTask = nextTask;
 
-                findFirstFreeTime();
+            findSuitableOneInTime();
                 takePreference();
                 assignNextResource();
 
                 return _Response;
         }
 
-        public NextResource CreateNext(Dictionary<int, IResource> resourceHash, Activity nextTask)
+        public NextResource CreateNext(Dictionary<int, IResource> resourceHash, Tasks nextTask)
         {
             _ResourceHash = resourceHash;
             _nextTask = nextTask;
@@ -44,9 +45,11 @@ namespace SampleSchedual.Processors
             {
                 Employee nextOne = new Employee
                 {
+                    Id = _ResourceHash.Count,
                     Name = string.Format("E{0}", (_ResourceHash.Count)),
-                    FreeTime = nextTask.Est.AddDays(-1),
-                    StartWork = nextTask.Est.AddDays(-2),
+                    FreeTime = nextTask.Est-1,
+                    StartWork = nextTask.Est-2,
+                    AttendenceList = new ArrayList(),
                 };
                 _ResourceHash.Add(_ResourceHash.Count, nextOne );
                 _PreferResource = nextOne;
@@ -75,7 +78,27 @@ namespace SampleSchedual.Processors
             return nextOne;
         }
 
+        private void findSuitableOneInTime()
+        {
+            var startTime = _nextTask.Est;
+            _SuitableOneInTime = null;
 
+            for(int i=0; i<_ResourceHash.Count;i++)
+            {
+                if(((Employee)_ResourceHash[i]).FreeTime-startTime<=0)
+                {
+                    _SuitableOneInTime = _ResourceHash[i];
+                    break;
+                }
+            }
+
+            if(_SuitableOneInTime==null)
+            {
+                findFirstFreeTime();
+                _SuitableOneInTime = _FirstFreeTime;
+            }
+
+        }
 
         private void assignNextResource()
         {
@@ -108,13 +131,13 @@ namespace SampleSchedual.Processors
         private void takePreference()
         {
             int preference_Id = _nextTask.Preference;
-            if((preference_Id!=0)&&(preference_Id!=_FirstFreeTimeKey)&&(((Employee)_FirstFreeTime).FreeTime.AddDays(2.0).CompareTo(((Employee)getById(preference_Id)).FreeTime) >=0))
+            if((preference_Id!=0)&&(preference_Id!=_FirstFreeTimeKey)&&((((Employee)_SuitableOneInTime).FreeTime+2).CompareTo(((Employee)getById(preference_Id)).FreeTime) >=0))
                 {
                 _PreferResource = getById(preference_Id);
                 }
             else
             {
-                _PreferResource = _FirstFreeTime;
+                _PreferResource = _SuitableOneInTime;
             }
         }
 

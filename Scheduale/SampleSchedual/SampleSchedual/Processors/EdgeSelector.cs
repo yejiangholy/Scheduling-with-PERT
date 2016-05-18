@@ -7,18 +7,18 @@ namespace SampleSchedual.Processors
 {
     public interface IActivitySelector
     {
-        Activity SelectNext(Dictionary<int, Activity> ActivityList);
+        Tasks SelectNext(Dictionary<int, Tasks> ActivityList);
     }
 
     public class ActivitySelector : IActivitySelector
     {
         #region Declarations
 
-        private Activity _minFloat;
+        private Tasks _minFloat;
 
         #endregion Declarations
 
-        public Activity SelectNext(Dictionary<int, Activity> ActivityList)
+        public Tasks SelectNext(Dictionary<int, Tasks> ActivityList)
         {
             var scheduableList = generateScheduableList(ActivityList);
 
@@ -29,22 +29,22 @@ namespace SampleSchedual.Processors
             return _minFloat;
         }
 
-        private List<Activity> generateEarlyStartList(List<Activity> list)
+        private List<Tasks> generateEarlyStartList(List<Tasks> list)
         {
-            var earlyStart = new List<Activity>();
-            DateTime earliestStartTime = findMinEst(list);
+            var earlyStart = new List<Tasks>();
+            var earliestStartTime = findMinEst(list);
             foreach(var Activity in list)
             {
-                if (Activity.Est.CompareTo(earliestStartTime)==0)
+                if (Activity.Est-earliestStartTime==0)
                     earlyStart.Add(Activity);
             }
             return earlyStart;
         }
 
-        private Activity findMinFloat(List<Activity> list)
+        private Tasks findMinFloat(List<Tasks> list)
         {
-            double min = 1000.0;
-            Activity minFloat = new Activity();
+            double min =9999.0;
+            Tasks minFloat = new Tasks();
             foreach(var Activity in list)
             {
                 if (Activity.Float < min)
@@ -56,9 +56,9 @@ namespace SampleSchedual.Processors
             return minFloat;
         }
 
-        private List<Activity> generateScheduableList(Dictionary<int, Activity> ActivityList)
+        private List<Tasks> generateScheduableList(Dictionary<int, Tasks> ActivityList)
         {
-            var schedulablelist = new List<Activity>();
+            var schedulablelist = new List<Tasks>();
             foreach (var entry in ActivityList)
             {
                 if (!hasUnstuffedDependency(entry.Value))
@@ -67,23 +67,23 @@ namespace SampleSchedual.Processors
             return schedulablelist;
         }
 
-        private bool hasUnstuffedDependency(Activity task)
+        private bool hasUnstuffedDependency(Tasks task)
         {
             foreach (var dependency in task.DependsOnList)
             {
-                var Activity = dependency as Activity;
+                var Activity = dependency as Tasks;
                 if (!Activity.Schedule) return true;
             }
             return false;
         }
 
-        private DateTime findMinEst(List<Activity> ActivityList)
+        private int findMinEst(List<Tasks> ActivityList)
         {
-            var min = new DateTime(9999, 11, 11);
+            var min = 9999;
 
             foreach (var Activity in ActivityList)
             {
-                if (Activity.Est.CompareTo(min) >= 0) continue;
+                if (Activity.Est-min >= 0) continue;
                 min = Activity.Est;
             }
 

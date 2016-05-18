@@ -55,7 +55,7 @@
     <Compile Include="Processors\Scheduler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyBags\Activity.cs" />
+    <Compile Include="PropertyBags\Tasks.cs" />
     <Compile Include="PropertyBags\Employee.cs" />
     <Compile Include="PropertyBags\NextResource.cs" />
     <Compile Include="PropertyBags\ScheduleData.cs" />

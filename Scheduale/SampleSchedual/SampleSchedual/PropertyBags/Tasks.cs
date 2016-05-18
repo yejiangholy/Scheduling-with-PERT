@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CPI.Graphing.GraphingEngine.Contracts.Dc;
 namespace SampleSchedule.PropertyBags
 {
-    public class Activity : IEdge
+    public class Tasks : IEdge
     {
         #region Declarations
 
@@ -25,12 +25,12 @@ namespace SampleSchedule.PropertyBags
         public int Preference { get; set; }
         public IResource TakenBy { get; set; }
         public double Float { get; set; }
-        public DateTime Est { get; set; }
-        public DateTime Eft { get; set; }
-        public DateTime Lst { get; set; }
-        public DateTime Lft { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime FinishTime { get; set; }
+        public int Est { get; set; }
+        public int Eft { get; set; }
+        public int Lst { get; set; }
+        public int Lft { get; set; }
+        public int StartTime { get; set; }
+        public int FinishTime { get; set; }
 
         #endregion Declarations
 
@@ -38,7 +38,7 @@ namespace SampleSchedule.PropertyBags
         {
             if (Schedule)
             {
-                return string.Format("Task {0} has been scheduled from {1} to {2} on employee {3}", Id, StartTime, FinishTime, TakenBy);
+                return string.Format("Task {0} has been scheduled from day {1} to day {2} on employee {3}", Id, StartTime, FinishTime, TakenBy);
             }
 
             return string.Format("Task {0} has not been scheduled yet", Id);

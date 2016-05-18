@@ -14,7 +14,7 @@ namespace SampleSchedule.Factories
     {
         #region Declarations
 
-        private static Dictionary<int, Activity> TaskHash = new Dictionary<int, Activity>();
+        private static Dictionary<int, Tasks> TaskHash = new Dictionary<int, Tasks>();
         private static Dictionary<int, IResource> EmployeeHash = new Dictionary<int, IResource>();
 
         #endregion Declarations
@@ -36,84 +36,84 @@ namespace SampleSchedule.Factories
             EmployeeHash.Add(1, new Employee
             {
                 Name = "E1",
-                FreeTime = new DateTime(2015, 10, 1),
-                StartWork = new DateTime(2014, 10, 1),
+                FreeTime = 0,
+                StartWork = 0,
             });
 
             EmployeeHash.Add(2, new Employee
             {
                 Name = "E2",
-                FreeTime = new DateTime(2015, 10, 1),
-                StartWork = new DateTime(2014, 10, 1),
+                FreeTime = 0,
+                StartWork = 0,
             });
         }
            
 
         private static void assignTaskHash()
         {
-            TaskHash.Add(1, new Activity
+            TaskHash.Add(1, new Tasks
             {
                 Id = 1,
                 DependsOnList = new List<IEdge>(),
                 Duration = 3,
-                Est = new DateTime(2015, 10, 3),
+                Est = 0,
             });
 
-            TaskHash.Add(2, new Activity
+            TaskHash.Add(2, new Tasks
             {
                 Id = 2,
                 DependsOnList = new List<IEdge>(),
                 Duration = 10,
-                Est = new DateTime(2015, 10, 5),
+                Est =2,
             });
-            TaskHash.Add(3, new Activity
+            TaskHash.Add(3, new Tasks
             {
                 Id = 3,
                 DependsOnList = new List<IEdge>(),
                 Duration = 3,
-                Est = new DateTime(2015, 10, 2),
+                Est = 2,
             });
-            TaskHash.Add(4, new Activity
+            TaskHash.Add(4, new Tasks
             {
                 Id = 4,
                 DependsOnList = new List<IEdge>(),
                 Duration = 4,
-                Est = new DateTime(2015, 10, 4),
+                Est = 4,
             });
-            TaskHash.Add(5, new Activity
+            TaskHash.Add(5, new Tasks
             {
                 Id = 5,
                 DependsOnList = new List<IEdge>(),
                 Duration = 3,
-                Est = new DateTime(2015, 10, 3),
+                Est = 2,
             });
-            TaskHash.Add(6, new Activity
+            TaskHash.Add(6, new Tasks
             {
                 Id = 6,
                 DependsOnList = new List<IEdge>(),
                 Duration = 4,
-                Est = new DateTime(2015, 10, 5),
+                Est = 5,
             });
-            TaskHash.Add(7, new Activity
+            TaskHash.Add(7, new Tasks
             {
                 Id = 7,
                 DependsOnList = new List<IEdge>(),
                 Duration = 7,
-                Est = new DateTime(2015, 10, 5),
+                Est = 5,
             });
-            TaskHash.Add(8, new Activity
+            TaskHash.Add(8, new Tasks
             {
                 Id = 8,
                 DependsOnList = new List<IEdge>(),
                 Duration = 1,
-                Est = new DateTime(2015, 10, 5),
+                Est = 5,
             });
-            TaskHash.Add(9, new Activity
+            TaskHash.Add(9, new Tasks
             {
                 Id = 9,
                 DependsOnList = new List<IEdge>(),
                 Duration = 2,
-                Est = new DateTime(2015, 10, 10),
+                Est = 5,
             });
 
         }

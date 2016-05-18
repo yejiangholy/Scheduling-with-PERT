@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 namespace SampleSchedule.PropertyBags
 {
     public interface IResource
@@ -11,8 +12,9 @@ namespace SampleSchedule.PropertyBags
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime StartWork { get; set; }
-        public DateTime FreeTime { get; set; }
+        public int StartWork { get; set; }
+        public int FreeTime { get; set; }
+        public ArrayList AttendenceList { get; set; }
 
         public override string ToString()
         {

@@ -89,11 +89,7 @@ namespace SampleSchedule.Processors
             for (int i = size - 2; i >= 0; i--)
             {
                 var earlistStartTimeInSuccessor = 9999;
-<<<<<<< HEAD
                 foreach (Tasks sucessor in ActivityList[i].DependentList)
-=======
-                foreach (Activity sucessor in ActivityList[i].DependentList)
->>>>>>> d081ec8c9f7eb9b2a76fc65bbedd5c4c8299177c
                 {
                     if (sucessor.Lst.CompareTo(earlistStartTimeInSuccessor) < 0)
                         earlistStartTimeInSuccessor = sucessor.Lst;
@@ -166,11 +162,7 @@ namespace SampleSchedule.Processors
 
             for (int i = nextActivity.StartTime; i < nextActivity.FinishTime; i++)
             {
-<<<<<<< HEAD
                 ((Employee)nextResource.Resource).AttendenceList.Add(i+1);
-=======
-                ((Employee)nextResource.Resource).AttendenceList.Add(i);
->>>>>>> d081ec8c9f7eb9b2a76fc65bbedd5c4c8299177c
             }
 
             if (_ScheduleData.ActivityHash.Count() == 1)
@@ -198,11 +190,7 @@ namespace SampleSchedule.Processors
                 ArrayList attendenceList = ((Employee)_ScheduleData.ResourceHash[i]).AttendenceList;
                 for (int k = 0; k < attendenceList.Count; k++)
                 {
-<<<<<<< HEAD
                     AttendenceChart[i, (int)attendenceList[k]-1] = true;
-=======
-                    AttendenceChart[i, (int)attendenceList[k]] = true;
->>>>>>> d081ec8c9f7eb9b2a76fc65bbedd5c4c8299177c
                 }
             }
         }

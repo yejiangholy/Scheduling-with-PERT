@@ -18,7 +18,4 @@ C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedua
 C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\bin\Debug\SampleSchedual.dll
 C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleScedule.csprojResolveAssemblyReference.cache
 C:\Schedule&PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleSchedual.dll
-<<<<<<< HEAD
 C:\Scheduling-with-PERT\Scheduale\SampleSchedual\SampleSchedual\obj\Debug\SampleScedule.csprojResolveAssemblyReference.cache
-=======
->>>>>>> d081ec8c9f7eb9b2a76fc65bbedd5c4c8299177c
